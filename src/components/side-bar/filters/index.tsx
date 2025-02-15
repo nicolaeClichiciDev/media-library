@@ -1,19 +1,11 @@
-import { ArrowSvg } from "./svgs";
-import { useMemo, useState } from "react";
-import { getFilterSections } from "./filter-sections.tsx";
+import { useState } from "react";
 import { SectionItems } from "./section-items.tsx";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "#/store";
-import { toggleAll } from "#/store/filters-slice.ts";
-
-const mock = { image: 3, video: 1, gif: 0 };
+import { useGetFilterSections } from "#/hooks";
+import { FilterSection } from "#/components/side-bar/filters/filter-section.tsx";
 
 export const Filters = () => {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
-  const filterSections = useMemo(() => getFilterSections(mock), []);
-
-  const filtersState = useSelector((state: RootState) => state.filters.value);
-  const dispatch = useDispatch();
+  const filterSections = useGetFilterSections();
 
   const toggleExpandedSection = (id: string) => {
     setExpandedSections((prev) => {
@@ -24,8 +16,6 @@ export const Filters = () => {
     });
   };
 
-  console.log(filtersState);
-
   return (
     <div className={"flex flex-col gap-2"}>
       <p className={"font-medium text-[14px] leading-[22px] tracking-[-0.2px]"}>
@@ -33,32 +23,16 @@ export const Filters = () => {
       </p>
       {filterSections.map(({ title, items, id }) => (
         <div className={"flex flex-col gap-1"} key={`section-${title}`}>
-          <div className={"flex justify-between"}>
-            <button
-              className={"flex gap-2 items-center"}
-              onClick={() => toggleExpandedSection(id)}
-            >
-              <p
-                className={
-                  "font-normal text-[12px] leading-[20px] text-[#878C91]"
-                }
-              >
-                {title}
-              </p>
-              <ArrowSvg expanded={expandedSections.includes(id)} />
-            </button>
-            <input
-              type="checkbox"
-              checked={filtersState[id].includes("all")}
-              onChange={() => {
-                dispatch(toggleAll({ type: id }));
-              }}
-            />
-          </div>
+          <FilterSection
+            sectionId={id}
+            title={title}
+            toggleExpandSection={toggleExpandedSection}
+            isExpanded={expandedSections.includes(id)}
+          />
           <SectionItems
             sectionId={id}
             items={items}
-            expanded={expandedSections.includes(id)}
+            isExpanded={expandedSections.includes(id)}
           />
         </div>
       ))}

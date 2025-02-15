@@ -1,12 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+const allMediaTypes = ["img", "video", "gif"];
+
 export interface FiltersState {
-  value: Record<string, string[]>;
+  filters: Record<string, string[]>;
+  search: string;
 }
 
 const initialState: FiltersState = {
-  value: { mediaType: ["all"] },
+  filters: {
+    mediaType: allMediaTypes,
+  },
+  search: "",
 };
 
 export const filtersSlice = createSlice({
@@ -15,30 +21,38 @@ export const filtersSlice = createSlice({
   reducers: {
     toggle: (
       state,
-      { payload }: PayloadAction<{ type: string; id: string }>,
+      {
+        payload,
+      }: PayloadAction<{
+        type: string;
+        id: string;
+      }>,
     ) => {
-      if (state.value[payload.type].includes(payload.id)) {
-        state.value[payload.type] = state.value[payload.type].filter(
+      if (state.filters[payload.type].includes(payload.id)) {
+        state.filters[payload.type] = state.filters[payload.type].filter(
           (x) => x !== payload.id,
         );
         return;
       }
-      state.value[payload.type].push(payload.id);
+
+      state.filters[payload.type].push(payload.id);
     },
     toggleAll: (state, { payload }: PayloadAction<{ type: string }>) => {
-      if (state.value[payload.type].includes("all")) {
-        state.value[payload.type] = state.value[payload.type].filter(
-          (x) => x !== "all",
-        );
+      // TODO: magic number, need to be more generic implementation
+      if (state.filters[payload.type].length === 3) {
+        state.filters[payload.type] = [];
         return;
       }
 
-      state.value[payload.type] = ["all"];
+      state.filters[payload.type] = allMediaTypes;
+    },
+
+    changeSearch: (state, { payload }: PayloadAction<string>) => {
+      state.search = payload;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { toggle, toggleAll } = filtersSlice.actions;
+export const { toggle, toggleAll, changeSearch } = filtersSlice.actions;
 
 export const filtersReducer = filtersSlice.reducer;

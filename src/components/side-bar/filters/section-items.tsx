@@ -1,21 +1,21 @@
 import { ReactElement } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "#/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "#/store";
 import { toggle } from "#/store/filters-slice.ts";
 
 interface Props {
   items: { icon: ReactElement; title: string; count: number; id: string }[];
-  expanded: boolean;
+  isExpanded: boolean;
   sectionId: string;
 }
 
 export const SectionItems = (props: Props) => {
-  const { items, expanded, sectionId } = props;
+  const { items, isExpanded, sectionId } = props;
 
-  const filtersState = useSelector((state: RootState) => state.filters.value);
+  const filtersState = useAppSelector((state) => state.filters.filters);
   const dispatch = useDispatch();
 
-  if (!expanded) {
+  if (!isExpanded) {
     return null;
   }
 
@@ -43,10 +43,7 @@ export const SectionItems = (props: Props) => {
           <input
             type="checkbox"
             onChange={() => dispatch(toggle({ type: sectionId, id: item.id }))}
-            checked={
-              filtersState[sectionId].includes(item.id) ||
-              filtersState[sectionId].includes("all")
-            }
+            checked={filtersState[sectionId].includes(item.id)}
           />
         </div>
       ))}

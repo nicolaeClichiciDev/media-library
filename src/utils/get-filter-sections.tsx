@@ -1,4 +1,4 @@
-import { GifSvg, ImageSvg, VideoSvg } from "./svgs";
+import { GifSvg, ImageSvg, VideoSvg } from "#/components/shared";
 
 export const getFilterSections = (data: Record<string, number>) => [
   {
@@ -6,19 +6,19 @@ export const getFilterSections = (data: Record<string, number>) => [
     title: "Media type",
     items: [
       {
-        id: "images",
+        id: "img",
         title: "Images",
         icon: <ImageSvg />,
         count: data.image,
       },
       {
-        id: "videos",
+        id: "video",
         title: "Videos",
         icon: <VideoSvg />,
         count: data.video,
       },
       {
-        id: "gifs",
+        id: "gif",
         title: "GIFs",
         icon: <GifSvg />,
         count: data.gif,

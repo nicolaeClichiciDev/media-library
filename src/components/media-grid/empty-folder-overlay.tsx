@@ -1,8 +1,8 @@
-export const EmptyFolder = () => {
+export const EmptyFolderOverlay = () => {
   return (
     <div
       className={
-        "h-full bg-[#F5F6F7] border border-[#C9CDD1] rounded-xl border-dashed flex justify-center items-center"
+        "h-full bg-[#F5F6F7] border border-[#C9CDD1] rounded-xl border-dashed flex justify-center items-center mt-1"
       }
     >
       <div className={"flex flex-col items-center gap-3"}>

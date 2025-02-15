@@ -1,50 +1,39 @@
-import { EmptyFolder } from "./empty-folder.tsx";
+import { EmptyFolderOverlay } from "./empty-folder-overlay.tsx";
 import { isEmpty } from "remeda";
-import { Card } from "#/components/media-grid/card.tsx";
-
-const mock = [
-  {
-    name: "test1.png",
-    url: "https://picsum.photos/200/400/?random=1",
-    id: "1",
-  },
-  {
-    name: "test2.png",
-    url: "https://picsum.photos/400/200/?random=2",
-    id: "2",
-  },
-  {
-    name: "test3.png",
-    url: "https://picsum.photos/500/500/?random=3",
-    id: "3",
-  },
-  {
-    name: "test3.png",
-    url: "https://picsum.photos/500/500/?random=4",
-    id: "4",
-  },
-  {
-    name: "test3.png",
-    url: "https://picsum.photos/500/500/?random=5",
-    id: "5",
-  },
-  {
-    name: "test3.png",
-    url: "https://picsum.photos/500/500/?random=6",
-    id: "6",
-  },
-];
+import { Card } from "./card";
+import { useDndContext } from "@dnd-kit/core";
+import { MediaOverlay } from "./card/media-overlay.tsx";
+import { useFilteredMedia } from "#/hooks";
+import { useMemo } from "react";
+import { ExpandedView } from "./expanded-view.tsx";
 
 export const MediaGrid = () => {
-  if (isEmpty(mock)) {
-    return <EmptyFolder />;
+  const { active } = useDndContext();
+
+  const filteredMedia = useFilteredMedia();
+
+  const activeMedia = useMemo(
+    () => filteredMedia.find((x) => x.id === active?.id),
+    [filteredMedia, active],
+  );
+
+  if (isEmpty(filteredMedia)) {
+    return <EmptyFolderOverlay />;
   }
 
   return (
-    <div className={"h-full  flex flex-wrap gap-2 p-1 content-start"}>
-      {mock.map((x) => (
-        <Card data={x} key={x.id} />
-      ))}
-    </div>
+    <>
+      <div
+        className={
+          "h-full flex flex-wrap gap-2 p-1 content-start overflow-auto"
+        }
+      >
+        {filteredMedia.map((item) => (
+          <Card {...item} key={item.id} />
+        ))}
+      </div>
+      <MediaOverlay mediaFile={activeMedia} />
+      <ExpandedView />
+    </>
   );
 };

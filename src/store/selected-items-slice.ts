@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface SelectedItemsState {
-  value: string[];
+interface SelectedItemsState {
+  selected: string[];
 }
 
 const initialState: SelectedItemsState = {
-  value: [],
+  selected: [],
 };
 
 export const selectedItemsSlice = createSlice({
@@ -13,20 +13,19 @@ export const selectedItemsSlice = createSlice({
   initialState,
   reducers: {
     toggleSelected: (state, { payload }: PayloadAction<string>) => {
-      if (state.value.includes(payload)) {
-        state.value = state.value.filter((x) => x !== payload);
+      if (state.selected.includes(payload)) {
+        state.selected = state.selected.filter((x) => x !== payload);
         return;
       }
 
-      state.value.push(payload);
+      state.selected.push(payload);
     },
     resetSelectedItems: (state) => {
-      state.value = [];
+      state.selected = [];
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { toggleSelected, resetSelectedItems } =
   selectedItemsSlice.actions;
 

@@ -4,7 +4,7 @@ export const App = () => {
   return (
     <div className={"flex gap-2 h-full w-full"}>
       <SideBar />
-      <div className={"w-full flex flex-col gap-1"}>
+      <div className={"w-full flex flex-col"}>
         <TopBar />
         <MediaGrid />
       </div>
