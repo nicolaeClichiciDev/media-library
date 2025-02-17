@@ -57,14 +57,14 @@ For different scenarios regarding the size of media files or the number of insta
 
 ## 🛠️ Known Issues (Technical)
 
-- 🔧 Improper theming configuration.
+- 🔧 Missing theme configuration.
 - 🔧 Some components can be generalized (e.g., add folder & rename folder fields).
 - 🔧 Tailwind hell in all components.
 - 🔧 State management issues (many places).
 - 🔧 Some workarounds.
 
 ## ⏭️ Next Steps
-- API heart
+- API
 - Theme configuration and usage of components/design library
 - Rfc & cleanup
 - Generalize some components
@@ -74,6 +74,6 @@ For different scenarios regarding the size of media files or the number of insta
 
 ## 💭 Overall
 
-Could be better, but had a release this week and a lot of work. As an excuse, I worked with Redux Toolkit & Tailwind about two years ago. I kinda think it's better to use Redux Toolkit with RTK or, even better, to have React-Query + RxJs Subjects. Also in project is not used Radix UI and  Shadcn because of time for configuration (used to work with Radix but for mobile mostly). For me it's not a problem this stack, but I need time to study docs.
+Could be better, but had a release this week and a lot of work. As an excuse, I worked with Redux Toolkit about two years ago. I kinda think it's better to use Redux Toolkit with RTK or, even better, to have React-Query + RxJs Subjects. Also in project is not used Radix UI and  Shadcn because of time for configuration (used to work with Radix but for mobile mostly). For me it's not a problem this stack, but I need time to study docs.
 
 
